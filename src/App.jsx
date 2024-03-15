@@ -115,17 +115,67 @@ function App() {
       difficulty: "medium",
     },
   ];
-  const [card, setCard] = useState(biologyQuestions[0]);
+  const [biologyQuestionsState, setBioQuestions] = useState(biologyQuestions);
+  const [card, setCard] = useState(biologyQuestionsState[0]);
+  const [index, setIndex] = useState(0);
   const [isFlipped, setFlip] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [inputClass, setInputClass] = useState("");
 
-  function changeCard() {
-    let randIndex = Math.floor(Math.random() * biologyQuestions.length);
-    console.log(randIndex);
-    setCard(biologyQuestions[randIndex]);
+  function moveRight() {
+    setIndex((prevIndex) => {
+      let newIndex = prevIndex + 1;
+      if (newIndex >= biologyQuestionsState.length) {
+        newIndex = 0;
+      }
+      setCard(biologyQuestionsState[newIndex]);
+      return newIndex;
+    });
+  }
+
+  function moveLeft() {
+    setIndex((prevIndex) => {
+      let newIndex = prevIndex - 1;
+      if (newIndex < 0) {
+        newIndex = biologyQuestionsState.length - 1;
+      }
+      setCard(biologyQuestionsState[newIndex]);
+      return newIndex;
+    });
+  }
+
+  function checkAnswer(e) {
+    e.preventDefault();
+    if (inputValue.trim().toLowerCase() === card.answer.toLowerCase()) {
+      setInputClass("correctBox");
+    } else {
+      setInputClass("incorrectBox");
+    }
+  }
+
+  function handleInputChange(e) {
+    setInputValue(e.target.value);
   }
 
   function flipCard() {
     setFlip(!isFlipped);
+  }
+
+  function shuffleCards() {
+    const shuffledArray = [...biologyQuestionsState]; // Create a copy of the original array
+
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1)); // Generate a random index
+
+      // Swap elements at i and j indices
+      [shuffledArray[i], shuffledArray[j]] = [
+        shuffledArray[j],
+        shuffledArray[i],
+      ];
+    }
+
+    setBioQuestions(shuffledArray);
+    setCard(biologyQuestionsState[0]);
   }
 
   return (
@@ -146,7 +196,27 @@ function App() {
             id={card.difficulty}
           ></Card>
         </div>
-        <button onClick={changeCard}> → </button>
+        <form onSubmit={checkAnswer}>
+          <label className="answerLabel" htmlFor="inputText">
+            Guess Answer:{" "}
+          </label>
+          <input
+            className={inputClass}
+            type="text"
+            id="inputText"
+            name="inputText"
+            value={inputValue}
+            onChange={handleInputChange}
+          ></input>
+          <button type="submit">Submit</button>
+        </form>
+        <div className="buttonDiv">
+          <button onClick={moveRight}> ← </button>
+          <button onClick={moveLeft}> → </button>
+          <div className="shuffle">
+            <button onClick={shuffleCards}>Shuffle</button>
+          </div>
+        </div>
       </div>
     </>
   );
