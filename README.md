@@ -25,8 +25,7 @@ Here's a walkthrough of implemented user stories:
 
 <div>
     <a href="https://www.loom.com/share/f88c2adf16964383b938a9bfbf0ab025">
-    </a>
-    <a href="https://www.loom.com/share/f88c2adf16964383b938a9bfbf0ab025">
+      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/f88c2adf16964383b938a9bfbf0ab025-with-play.gif">
     </a>
 </div>
 
