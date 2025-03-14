@@ -129,6 +129,7 @@ function App() {
         newIndex = 0;
       }
       setCard(biologyQuestionsState[newIndex]);
+      setFlip(false);
       return newIndex;
     });
   }
@@ -140,6 +141,7 @@ function App() {
         newIndex = biologyQuestionsState.length - 1;
       }
       setCard(biologyQuestionsState[newIndex]);
+      setFlip(false);
       return newIndex;
     });
   }
@@ -162,10 +164,10 @@ function App() {
   }
 
   function shuffleCards() {
-    const shuffledArray = [...biologyQuestionsState]; // Create a copy of the original array
+    const shuffledArray = [...biologyQuestionsState];
 
     for (let i = shuffledArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1)); // Generate a random index
+      const j = Math.floor(Math.random() * (i + 1)); 
 
       // Swap elements at i and j indices
       [shuffledArray[i], shuffledArray[j]] = [
